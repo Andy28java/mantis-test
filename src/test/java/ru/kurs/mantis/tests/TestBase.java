@@ -10,6 +10,9 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import ru.kurs.mantis.appmanager.ApplicationManager;
 
+import java.io.File;
+import java.io.IOException;
+
 import static org.testng.Assert.assertTrue;
 
 /**
@@ -56,12 +59,15 @@ public class TestBase {
     public void setUp() throws Exception {
         System.out.println("app:" + app);
         app.init();
+        app.ftp().upload(new File("src/test/resources/config_inc.php"),"config_inc.php", "config_inc.php.bak");
+
 
         //wd = app.getWebDriver();
     }
 
-    @AfterSuite
-    public void tearDown() {
+    @AfterSuite(alwaysRun = true)
+    public void tearDown() throws IOException {
+        app.ftp().restore("config_inc.php.bak", "config_inc.php");
         app.stop();
     }
 
