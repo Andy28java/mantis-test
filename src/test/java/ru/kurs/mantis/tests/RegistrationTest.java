@@ -28,14 +28,14 @@ public class RegistrationTest extends TestBase {
         String user = String.format("user%s", now);
         String password = "password";
         app.registration().start(user, email);
-        List<MailMessage> mailMessages = app.mail().waitForMail(2, 120000);
+        List<MailMessage> mailMessages = app.mail().waitForMail(2, 12000);
         String confirmationLink = findConfirmationLink(mailMessages, email);
         app.registration().finish(confirmationLink, password);
         assertTrue(app.newSession().login(user, password));
 
     }
 
-    private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
+    public String findConfirmationLink(List<MailMessage> mailMessages, String email) {
         MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findFirst().get();
         VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
         return regex.getText(mailMessage.text);

@@ -8,6 +8,8 @@ import javax.mail.internet.MimeMessage;
 import ru.kurs.mantis.model.MailMessage;
 
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,8 +23,14 @@ public class MailHelper {
     public MailHelper(ApplicationManager app) {
         this.app = app;
         wiser = new Wiser();
+        /*try {
+            wiser.getServer().setBindAddress(Inet4Address.getLocalHost());
+        } catch  (UnknownHostException e) {
+            e.printStackTrace(System.out);
+        }
         wiser.setHostname("localhost");
         wiser.setPort(25);
+        */
     }
 
     public List<MailMessage> waitForMail(int count, long timeout) throws MessagingException, IOException {
