@@ -16,21 +16,23 @@ public class AdminHelper extends HelperBase {
         }
 
         public void loginAs(String username, String password) {
-            wd.get(app.getProperty("web.baseUrl") + "/login.php");//"/login_page.php");
+            wd.get(app.getProperty("web.baseUrl") + "/login.php");
             type(By.name("username"),username);
             type(By.name("password"), password);
             click(By.cssSelector("input[value='Login']"));
         }
-
-        public void manageUsers() {
+          public void manageUsers() {
             if (isElementPresent(By.cssSelector("input[value='Create New Account']"))){
                 return;
-            }
-            click(By.linkText("Manage Users"));
-        }
+           }
+              click(By.linkText("Manage"));
+              click(By.linkText("Manage Users"));
+          }
 
     public void selectUser() {
-            List<WebElement> elements = wd.findElements(By.xpath(".//*[@class='width100']/*/tr[@class='row-2']/td[1]/a | .//*[@class='width100']/*/tr[@class='row-1']/td[1]/a"));
+
+        List<WebElement> elements = wd.findElements(By.xpath(".//table[3]/tbody/tr[position() > 2]/td[1]/a"));
+        System.out.println(elements);
             WebElement chosenUser = elements.stream().filter((e) -> ! e.getText().equals("administrator")).findAny().get();
             chosenUser.click();
         }
@@ -40,7 +42,7 @@ public class AdminHelper extends HelperBase {
         }
 
         public void startResetPassword() {
-            String username = app.getProperty("web.adminUsername");
+            String username = app.getProperty("web.adminLogin");
             String password = app.getProperty("web.adminPassword");
             loginAs(username, password);
             manageUsers();
