@@ -16,7 +16,7 @@ public class AdminHelper extends HelperBase {
         }
 
         public void loginAs(String username, String password) {
-            wd.get(app.getProperty("web.baseUrl") + "/login.php");
+            wd.get(app.getProperty("web.baseUrl") + "login_page.php");
             type(By.name("username"),username);
             type(By.name("password"), password);
             click(By.cssSelector("input[value='Login']"));
@@ -25,8 +25,7 @@ public class AdminHelper extends HelperBase {
             if (isElementPresent(By.cssSelector("input[value='Create New Account']"))){
                 return;
            }
-              click(By.linkText("Manage"));
-              click(By.linkText("Manage Users"));
+            click(By.linkText("Manage Users"));
           }
 
     public void selectUser() {
