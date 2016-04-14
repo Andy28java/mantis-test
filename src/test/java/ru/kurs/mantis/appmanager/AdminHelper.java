@@ -25,6 +25,7 @@ public class AdminHelper extends HelperBase {
             if (isElementPresent(By.cssSelector("input[value='Create New Account']"))){
                 return;
            }
+              click(By.linkText("Manage"));
             click(By.linkText("Manage Users"));
           }
 
